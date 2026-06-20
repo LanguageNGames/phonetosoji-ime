@@ -352,7 +352,6 @@ export default function App() {
             placeholder="Type phonetosoji here..."
             style={{
               width: "100%",
-              minHeight: "400px",
               fontSize: "1.2rem",
               padding: "1rem",
               boxSizing: "border-box",
@@ -373,7 +372,7 @@ export default function App() {
           </div>
           <div
             style={{
-              width: "250px",
+              width: "200px",
               border: "1px solid #ccc",
               padding: "1rem",
             }}
