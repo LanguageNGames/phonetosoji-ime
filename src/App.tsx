@@ -1,10 +1,6 @@
 import {useEffect,useRef,useState} from "react";
-import DictionaryInspector from "./components/DictionaryInspector";
 import { convertSentence } from "./utils/convertSentence";
-import CandidateList from "./components/CandidateList";
-import { buildDisplayText } from "./utils/buildDisplayText";
 import { mergeResults } from "./utils/mergeResults";
-import { rankCandidates } from "./utils/rankCandidates";
 import { userFrequency, saveUserFrequency } from "./data/userFrequency";
 import { replaceActiveWord } from "./utils/replaceActiveWord";
 import CandidatePopup from "./components/CandidatePopup";
