@@ -1,16 +1,32 @@
-export const userDictionary:
-Record<string, string> =
-  JSON.parse(
-    localStorage.getItem(
-      "userDictionary"
-    ) ?? "{}"
-  );
+export type UserDictionary = {
+  [key: string]: string[];
+};
 
-export function saveUserDictionary() {
+const STORAGE_KEY =
+  "phonetosoji-user-dictionary";
+
+export function loadUserDictionary(): UserDictionary {
+  const saved =
+    localStorage.getItem(
+      STORAGE_KEY
+    );
+
+  if (!saved) {
+    return {};
+  }
+
+  try {
+    return JSON.parse(saved);
+  } catch {
+    return {};
+  }
+}
+
+export function saveUserDictionary(
+  dictionary: UserDictionary
+) {
   localStorage.setItem(
-    "userDictionary",
-    JSON.stringify(
-      userDictionary
-    )
+    STORAGE_KEY,
+    JSON.stringify(dictionary)
   );
 }

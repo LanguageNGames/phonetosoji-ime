@@ -5,7 +5,7 @@ import { userFrequency, saveUserFrequency } from "./data/userFrequency";
 import { replaceActiveWord } from "./utils/replaceActiveWord";
 import CandidatePopup from "./components/CandidatePopup";
 import getCaretCoordinates from "textarea-caret";
-
+import {loadUserDictionary, saveUserDictionary,} from "./data/userDictionary";
 
 
 export default function App() {
@@ -15,23 +15,87 @@ export default function App() {
   const textareaRef =useRef<HTMLTextAreaElement>(null);
   const activeWord = results[activeWordIndex];
   const [popupPosition, setPopupPosition] = useState({top: 0, left: 0,});
+  const [userDictionary, setUserDictionary] = useState(loadUserDictionary());
 
-  /* useEffect(() => {
-    if (!textareaRef.current) {
+  const [newEnglish,
+    setNewEnglish] =
+    useState("");
+
+  const [newPhonetosoji,
+    setNewPhonetosoji] =
+    useState("");
+
+  function deleteUserWord(
+    phonetic: string,
+    word: string
+  ) {
+    const updated = {
+      ...userDictionary,
+    };
+
+    updated[phonetic] =
+      updated[phonetic].filter(
+        (entry) => entry !== word
+      );
+
+    if (
+      updated[phonetic].length === 0
+    ) {
+      delete updated[phonetic];
+    }
+
+    setUserDictionary(
+      updated
+    );
+
+    saveUserDictionary(
+      updated
+    );
+  }
+
+  function addUserWord() {
+    if (
+      !newEnglish.trim() ||
+      !newPhonetosoji.trim()
+    ) {
       return;
     }
 
-    textareaRef.current.setSelectionRange(
-      caret.start,
-      caret.end
-    );
-  }, [displayText]); */
+    const key =
+      newPhonetosoji
+        .trim()
+        .toLowerCase();
 
-  /* useEffect(() => {
-    setDisplayText(
-      buildDisplayText(results)
+    const value =
+      newEnglish
+        .trim()
+        .toUpperCase();
+
+    if (
+      userDictionary[key]?.includes(value)
+    ) {
+      return;
+    }
+
+    const updated = {
+      ...userDictionary,
+      [key]: [
+        ...(userDictionary[key] ?? []),
+        value,
+      ],
+    };
+
+    setUserDictionary(
+      updated
     );
-  }, [results]); */
+
+    saveUserDictionary(
+      updated
+    );
+
+    setNewEnglish("");
+    setNewPhonetosoji("");
+  }
 
   useEffect(() => {
     updatePopupPosition();
@@ -294,7 +358,6 @@ export default function App() {
               boxSizing: "border-box",
             }}
           />
-
           <div
             style={{
               position: "absolute",
@@ -307,6 +370,87 @@ export default function App() {
               activeWord={activeWord}
             />
           </div>
+          </div>
+          <div
+            style={{
+              width: "250px",
+              border: "1px solid #ccc",
+              padding: "1rem",
+            }}
+          >
+            <h3>
+              Personal Dictionary
+            </h3>
+
+            <input
+              placeholder="English"
+              value={newEnglish}
+              onChange={(e) =>
+                setNewEnglish(
+                  e.target.value
+                )
+              }
+            />
+
+            <input
+              placeholder="Phonetosoji"
+              value={newPhonetosoji}
+              onChange={(e) =>
+                setNewPhonetosoji(
+                  e.target.value
+                )
+              }
+              style={{
+                marginTop: "0.5rem",
+              }}
+            />
+
+            <button
+              onClick={addUserWord}
+              style={{
+                marginTop: "1rem",
+                width: "100%",
+              }}
+            >
+              Add Word
+            </button>
+            <h4>Custom Words</h4>
+            <ul>
+              {Object.entries(userDictionary)
+                .flatMap(([phonetic, words]) =>
+                  words.map((word) => ({
+                    phonetic,
+                    word,
+                  }))
+                )
+                .map(({ phonetic, word }) => (
+                  <li
+                    key={`${phonetic}-${word}`}
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      gap: "0.5rem",
+                    }}
+                  >
+                    <span>
+                      {phonetic} → {word}
+                    </span>
+
+                    <button
+                      onClick={() =>
+                        deleteUserWord(
+                          phonetic,
+                          word
+                        )
+                      }
+                    >
+                      X
+                    </button>
+                  </li>
+                ))}
+            </ul>
+
+          
           
           {/* <div
             style={{
