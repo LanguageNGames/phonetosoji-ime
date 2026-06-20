@@ -9,14 +9,12 @@ import getCaretCoordinates from "textarea-caret";
 
 
 export default function App() {
-  const [rawInput, setRawInput] = useState("");
   const [displayText, setDisplayText] = useState("");
   const [results, setResults] = useState(convertSentence(""));
   const [activeWordIndex, setActiveWordIndex] = useState<number>(0);
   const textareaRef =useRef<HTMLTextAreaElement>(null);
   const activeWord = results[activeWordIndex];
   const [popupPosition, setPopupPosition] = useState({top: 0, left: 0,});
-  const [isComposing, setIsComposing] = useState(false);
 
   /* useEffect(() => {
     if (!textareaRef.current) {
@@ -54,9 +52,10 @@ export default function App() {
       );
 
     const lineHeight =
-      parseInt(
+      Number.parseInt(
         getComputedStyle(textarea)
-          .lineHeight
+          .lineHeight,
+        10
       ) || 24;
 
     setPopupPosition({
@@ -147,7 +146,6 @@ export default function App() {
   function handleInputChange(
   value: string
   ) {
-    setRawInput(value);
     setDisplayText(value);
 
     const newResults =
@@ -239,7 +237,7 @@ export default function App() {
         margin: "0 auto",
       }}
     >
-      <h1>Phonetosoji IME</h1>
+      <h1>Phonetosoji Translator</h1>
 
       <div
         style={{
