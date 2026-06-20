@@ -1,0 +1,38 @@
+[
+  {
+    "english": "home",
+    "phonetosoji": "ho2m"
+  },
+  {
+    "english": "book",
+    "phonetosoji": "bo6k"
+  },
+  {
+    "english": "house",
+    "phonetosoji": "ho4s"
+  },
+  {
+    "english": "you",
+    "phonetosoji": "u2"
+  },
+  {
+    "english": "right",
+    "phonetosoji": "ri2t",
+    "marker": "sb"
+  },
+  {
+    "english": "write",
+    "phonetosoji": "ri2t",
+    "marker": "a"
+  },
+  {
+    "english": "rite",
+    "phonetosoji": "ri2t",
+    "marker": "o"
+  },
+  {
+    "english": "wright",
+    "phonetosoji": "ri2t",
+    "marker": "n"
+  }
+]
