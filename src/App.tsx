@@ -208,10 +208,8 @@ export default function App() {
   }
 
   function handleInputChange(
-  value: string
+    value: string
   ) {
-    setDisplayText(value);
-
     const newResults =
       convertSentence(value);
 
@@ -221,6 +219,26 @@ export default function App() {
         newResults
       )
     );
+
+    const hasMarker =
+      value.includes("=");
+
+    if (
+      hasMarker &&
+      newResults.every(
+        (r) =>
+          r.converted &&
+          r.candidates.length === 1
+      )
+    ) {
+      setDisplayText(
+        newResults
+          .map((r) => r.display)
+          .join(" ")
+      );
+    } else {
+      setDisplayText(value);
+    }
   }
 
   function selectCandidate(
@@ -365,9 +383,14 @@ export default function App() {
               zIndex: 1000,
             }}
           >
-            <CandidatePopup
-              activeWord={activeWord}
-            />
+            {
+              activeWord &&
+              activeWord.candidates.length > 1 && (
+                <CandidatePopup
+                  activeWord={activeWord}
+                />
+              )
+            }
           </div>
           </div>
           <div

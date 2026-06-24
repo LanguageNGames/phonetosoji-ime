@@ -22,7 +22,8 @@ export function convertSentence(
       candidates,
       selectedIndex: 0,
       converted: autoConvert,
-      display: autoConvert
+      display:
+      candidates.length === 1
         ? candidates[0]
         : word,
     };
