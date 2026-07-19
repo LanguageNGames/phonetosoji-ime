@@ -4,22 +4,46 @@ export function mergeResults(
   oldResults: WordResult[],
   newResults: WordResult[]
 ): WordResult[] {
-  return newResults.map((newWord) => {
-    const existing = oldResults.find(
-      (oldWord) =>
-        oldWord.original === newWord.original
-    );
+  return newResults.map(
+    (newWord, index) => {
+      const existing =
+        oldResults[index];
 
-    if (!existing) {
-      return newWord;
+      if (
+        !existing ||
+        existing.original !==
+          newWord.original
+      ) {
+        return newWord;
+      }
+
+      const maxIndex =
+        Math.max(
+          0,
+          newWord.candidates.length - 1
+        );
+
+      const selectedIndex =
+        Math.min(
+          existing.selectedIndex,
+          maxIndex
+        );
+
+      return {
+        ...newWord,
+        selectedIndex,
+        converted:
+          existing.converted,
+        display:
+          existing.converted &&
+          newWord.candidates[
+            selectedIndex
+          ]
+            ? newWord.candidates[
+                selectedIndex
+              ]
+            : newWord.display,
+      };
     }
-
-    return {
-      ...newWord,
-      selectedIndex:
-        existing.selectedIndex,
-      converted:
-        existing.converted,
-    };
-  });
+  );
 }

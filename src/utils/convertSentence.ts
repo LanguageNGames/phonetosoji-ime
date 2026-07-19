@@ -8,24 +8,27 @@ export function convertSentence(
     return [];
   }
 
-  const words = input.trim().split(/\s+/);
+  const words =
+    input.trim().split(/\s+/);
 
-  return words.map((word, index) => {
-    const candidates = findCandidates(word);
+  return words.map(
+    (word, index) => {
+      const candidates =
+        findCandidates(word);
 
-    const autoConvert =
-      candidates.length === 1;
+      const autoConvert =
+        candidates.length === 1;
 
-    return {
-      id: index,
-      original: word,
-      candidates,
-      selectedIndex: 0,
-      converted: autoConvert,
-      display:
-      candidates.length === 1
-        ? candidates[0]
-        : word,
-    };
-  });
+      return {
+        id: index,
+        original: word,
+        candidates,
+        selectedIndex: 0,
+        converted: autoConvert,
+        display: autoConvert
+          ? candidates[0]
+          : word,
+      };
+    }
+  );
 }

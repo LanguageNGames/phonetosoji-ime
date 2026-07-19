@@ -1,5 +1,4 @@
-import { cmuDictionary }
-from "./loadCmudict";
+import { cmuDictionary } from "./loadCmudict";
 
 const pronunciationIndex =
   new Map<string, string[]>();
@@ -10,15 +9,20 @@ for (const entry of cmuDictionary) {
       .join(" ")
       .replace(/[0-9]/g, "");
 
+  const word =
+    entry.word.toLowerCase();
+
   const existing =
     pronunciationIndex.get(key);
 
   if (existing) {
-    existing.push(entry.word);
+    if (!existing.includes(word)) {
+      existing.push(word);
+    }
   } else {
     pronunciationIndex.set(
       key,
-      [entry.word]
+      [word]
     );
   }
 }

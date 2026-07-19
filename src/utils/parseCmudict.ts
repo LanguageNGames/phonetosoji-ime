@@ -15,8 +15,11 @@ export function parseCmudict(
         line.trim().split(/\s+/);
 
       return {
-        word: parts[0],
-        pronunciation: parts.slice(1),
+        word: parts[0]
+          .replace(/\(\d+\)$/g, "")
+          .toLowerCase(),
+        pronunciation:
+          parts.slice(1),
       };
     });
 }

@@ -42,6 +42,7 @@ export const phonetosojiToCmu: Record<
 
   s: "S",
   z: "Z",
+  z2: "ZH",
 
   th: "TH",
   th2: "DH",
@@ -57,4 +58,6 @@ export const phonetosojiToCmu: Record<
   y: "Y",
 
   h: "HH",
+
+  "8": "OY",
 };

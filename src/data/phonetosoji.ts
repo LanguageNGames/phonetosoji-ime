@@ -1,4 +1,7 @@
-export const phonetosojiMap: Record<string, string> = {
+export const phonetosojiMap: Record<
+  string,
+  string
+> = {
   a: "æ",
   a2: "eɪ",
   a3: "ʌ",
@@ -38,6 +41,7 @@ export const phonetosojiMap: Record<string, string> = {
 
   s: "s",
   z: "z",
+  z2: "ʒ",
 
   th: "θ",
   th2: "ð",
@@ -50,10 +54,9 @@ export const phonetosojiMap: Record<string, string> = {
   y: "j",
 
   h: "h",
-
   l: "l",
 
   j: "dʒ",
 
-  z2: "ʒ",
+  "8": "ɔɪ",
 };

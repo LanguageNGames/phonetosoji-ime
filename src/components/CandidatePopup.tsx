@@ -1,12 +1,15 @@
-import type { WordResult }
-from "../types/ime";
+import type { WordResult } from "../types/ime";
 
 interface Props {
   activeWord?: WordResult;
+  onCommitCandidate: (
+    candidateIndex: number
+  ) => void;
 }
 
 export default function CandidatePopup({
   activeWord,
+  onCommitCandidate,
 }: Props) {
   if (!activeWord) {
     return null;
@@ -20,11 +23,9 @@ export default function CandidatePopup({
 
   return (
     <div
+      role="listbox"
+      aria-label={`Candidates for ${activeWord.original}`}
       style={{
-        position: "absolute",
-        top: "100%",
-        left: 0,
-        marginTop: "8px",
         background: "white",
         border: "1px solid #ccc",
         borderRadius: "6px",
@@ -32,16 +33,37 @@ export default function CandidatePopup({
         minWidth: "180px",
         boxShadow:
           "0 4px 12px rgba(0,0,0,0.15)",
-        zIndex: 1000,
       }}
     >
+      <div
+        style={{
+          fontSize: "0.75rem",
+          color: "#666",
+          padding: "2px 8px 6px",
+          borderBottom: "1px solid #eee",
+          marginBottom: "4px",
+        }}
+      >
+        {activeWord.original}
+      </div>
+
       {activeWord.candidates.map(
         (candidate, index) => (
           <div
-            key={candidate}
+            key={`${candidate}-${index}`}
+            role="option"
+            aria-selected={
+              index ===
+              activeWord.selectedIndex
+            }
+            onMouseDown={(e) => {
+              e.preventDefault();
+              onCommitCandidate(index);
+            }}
             style={{
-              padding:
-                "4px 8px",
+              cursor: "pointer",
+              padding: "4px 8px",
+              borderRadius: "4px",
               background:
                 index ===
                 activeWord.selectedIndex

@@ -10,6 +10,7 @@ export function tokenizePhonetosoji(
     "th",
     "sh",
     "ch",
+    "z2",
 
     "a2",
     "a3",
@@ -28,10 +29,14 @@ export function tokenizePhonetosoji(
   while (i < input.length) {
     let matched = false;
 
-    for (const token of multiCharTokens) {
+    for (
+      const token of multiCharTokens
+    ) {
       if (
-        input.slice(i, i + token.length) ===
-        token
+        input.slice(
+          i,
+          i + token.length
+        ) === token
       ) {
         tokens.push(token);
         i += token.length;

@@ -1,5 +1,10 @@
 export function loadUserFrequency():
 Record<string, number> {
+  if (
+    typeof localStorage === "undefined"
+  ) {
+    return {};
+  }
 
   const stored =
     localStorage.getItem(
@@ -20,6 +25,12 @@ Record<string, number> {
 export function saveUserFrequency(
   data: Record<string, number>
 ) {
+  if (
+    typeof localStorage === "undefined"
+  ) {
+    return;
+  }
+
   localStorage.setItem(
     "userFrequency",
     JSON.stringify(data)
